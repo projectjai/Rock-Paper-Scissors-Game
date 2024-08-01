@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            background-color: black;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+        }
+        .a:hover {
+            cursor: pointer;
+            background-color: black;
+        }
+        .a {
+            height: 165px;
+            width: 165px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+        img {
+            height: 91px;
+            width: -23px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .aa {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+        .scoreboard {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            margin-top: 2rem;
+            gap: 4rem;
+        }
+        .msg {
+            margin-top: 2rem;
+        }
+        #msg1 {
+            background-color: black;
+            color: beige;
+            padding: 1rem;
+            font-size: 1.5rem;
+            border-radius: 1rem;
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rock Paper Scissors</h1>
+    <div class="aa">
+        <div id="rock" class="a"><img src="https://res.cloudinary.com/dpjlbiikb/image/upload/v1722001949/Screenshot_2024-07-26_191727_sojhh3.png" alt="Rock"></div>
+        <div id="paper" class="a"><img src="https://res.cloudinary.com/dpjlbiikb/image/upload/v1722001958/Screenshot_2024-07-26_191728_bzi7u0.png" alt="Paper"></div>
+        <div id="scissors" class="a"><img src="https://res.cloudinary.com/dpjlbiikb/image/upload/v1722001963/Screenshot_2024-07-26_191729_abckyn.png" alt="Scissors"></div>
+    </div>
+    <div class="scoreboard">
+        <div>Player: <span id="u1">0</span></div>
+        <div>Computer: <span id="c1">0</span></div>
+    </div>
+    <div class="msg">
+        <p id="msg1">Let's play!</p>
+    </div>
+    <script>
+        let u1 = 0;
+        let c1 = 0;
+        const x = document.querySelectorAll(".a");
+        const pra = document.querySelector("#msg1");
+        const s1 = document.querySelector("#u1");
+        const s2 = document.querySelector("#c1");
+
+        const compgame = () => {
+            const arr = ["rock", "paper", "scissors"];
+            const randomIndex = Math.floor(Math.random() * 3);
+            return arr[randomIndex];
+        };
+
+        const showwinner = (userwin, user, compu) => {
+            if (userwin) {
+                u1++;
+                s1.innerText = u1;
+                pra.innerText = `You win! Your ${user} beats ${compu}.`;
+                pra.style.background = "green";
+            } else {
+                c1++;
+                s2.innerText = c1;
+                pra.innerText = `You lose! ${compu} beats your ${user}.`;
+                pra.style.background = "red";
+            }
+        };
+
+        const drawgame = () => {
+            pra.innerText = "It's a draw! Play again.";
+            pra.style.background = "blueviolet";
+        };
+
+        const player = (user) => {
+            const compu = compgame();
+            if (user === compu) {
+                drawgame();
+            } else {
+                const userwin = (user === "rock" && compu === "scissors") ||
+                                (user === "paper" && compu === "rock") ||
+                                (user === "scissors" && compu === "paper");
+                showwinner(userwin, user, compu);
+            }
+        };
+
+        x.forEach((g) => {
+            g.addEventListener("click", () => {
+                const chid = g.getAttribute("id");
+                player(chid);
+            });
+        });
+    </script>
+</body>
+</html>
